@@ -1,5 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { v4 } from 'uuid';
 
 const CrearPelicula = () => {
   const [nombre, setNombre] = useState("");
@@ -8,20 +10,34 @@ const CrearPelicula = () => {
   const [anio, setAnio] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
+  async function addPelicula() {
+    let peliculaNueva = {
+      id: v4(),
+      nombre: nombre,
+      calificacion: calificacion,
+      clasifiacion: clasificacion,
+      anio: anio,
+      descripcion: descripcion,
+      idGenero: (Math.random() * 10).toFixed(0),
+    };
+    await axios.post("http://localhost:3001/peliculas", peliculaNueva);
+  }
+
   const agregarPelicula = () => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Está seguro que desea crear la pelicula?",
+      text: "Luego podrá eliminar la película",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Si, crear película",
     }).then((result) => {
       if (result.isConfirmed) {
+        addPelicula();
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          title: "Creada!",
+          text: "La pelicula se ha creado correctamente.",
           icon: "success",
         });
       }

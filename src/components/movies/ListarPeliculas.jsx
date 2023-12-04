@@ -8,9 +8,9 @@ const ListarPeliculas = () => {
 
   const traerPeliculas = async () => {
     let listadoPeliculas = await axios.get("http://localhost:3001/peliculas");
+    console.log(listadoPeliculas)
     setPeliculas(listadoPeliculas.data);
-  };
-  
+  };  
 
   return (
     <div className="peliculas">
