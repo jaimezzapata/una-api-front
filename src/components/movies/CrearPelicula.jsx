@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { v4 } from 'uuid';
+import {useNavigate} from 'react-router-dom'
 
 const CrearPelicula = () => {
   const [nombre, setNombre] = useState("");
@@ -9,6 +10,7 @@ const CrearPelicula = () => {
   const [clasificacion, setClasificacion] = useState("");
   const [anio, setAnio] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  let redireccion = useNavigate()
 
   async function addPelicula() {
     let peliculaNueva = {
@@ -35,6 +37,7 @@ const CrearPelicula = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         addPelicula();
+        redireccion('/peliculas')
         Swal.fire({
           title: "Creada!",
           text: "La pelicula se ha creado correctamente.",
