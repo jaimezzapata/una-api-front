@@ -1,6 +1,7 @@
 import axios from "axios";
 import Header from "../helpers/Header";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ListarPeliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
@@ -28,6 +29,7 @@ const ListarPeliculas = () => {
       <button type="butoon" onClick={traerPeliculas}>
         Mostrar
       </button>
+      <Link to='/crear' className="btnAgregar">Agregar</Link>
     </div>
   );
 };
