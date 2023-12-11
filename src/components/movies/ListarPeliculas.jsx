@@ -55,7 +55,7 @@ const ListarPeliculas = () => {
             <p>Año: {pelicula.anio}</p>
             <p>Descripcion: {pelicula.descripcion}</p>
             <div className="botones">
-              <Link>Editar</Link>
+              <Link to={'/editar/'+pelicula.id}>Editar</Link>
               <button onClick={()=> confirmarDelete(pelicula.id)}>Eliminar</button>
             </div>
           </section>
