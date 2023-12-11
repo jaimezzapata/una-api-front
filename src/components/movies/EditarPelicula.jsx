@@ -28,7 +28,6 @@ const EditarPelicula = () => {
 
   async function addPelicula() {
     let peliculaNueva = {
-      id: v4(),
       nombre: nombre,
       calificacion: calificacion,
       clasifiacion: clasificacion,
@@ -36,25 +35,25 @@ const EditarPelicula = () => {
       descripcion: descripcion,
       idGenero: (Math.random() * 10).toFixed(0),
     };
-    await axios.put("http://localhost:3001/peliculas", peliculaNueva);
+    await axios.put("http://localhost:3001/peliculas/"+id, peliculaNueva);
   }
 
   const updatePelicula = () => {
     Swal.fire({
-      title: "Está seguro que desea crear la pelicula?",
-      text: "Luego podrá eliminar la película",
+      title: "Está seguro que desea editar la pelicula?",
+      text: "Luego podrá editar la película",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, crear película",
+      confirmButtonText: "Si, editar película",
     }).then((result) => {
       if (result.isConfirmed) {
         addPelicula();
         redireccion("/peliculas");
         Swal.fire({
-          title: "Creada!",
-          text: "La pelicula se ha creado correctamente.",
+          title: "Actualizada!",
+          text: "La pelicula se ha actualziado correctamente.",
           icon: "success",
         });
       }
