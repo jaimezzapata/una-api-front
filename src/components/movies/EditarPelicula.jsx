@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { v4 } from 'uuid';
-import {useNavigate, useParams} from 'react-router-dom'
+import { v4 } from "uuid";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditarPelicula = () => {
   const [nombre, setNombre] = useState("");
@@ -10,13 +10,21 @@ const EditarPelicula = () => {
   const [clasificacion, setClasificacion] = useState("");
   const [anio, setAnio] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  let redireccion = useNavigate()
-  let {id} = useParams()
+  let redireccion = useNavigate();
+  let { id } = useParams();
 
-
-  function getPeliculaId(){
-    
+  async function getPeliculaId() {
+    const respuesta = await axios.get("http://localhost:3001/peliculas/" + id);
+    setNombre(respuesta.data.nombre);
+    setCalificacion(respuesta.data.calificacion);
+    setClasificacion(respuesta.data.clasifiacion);
+    setAnio(respuesta.data.anio);
+    setDescripcion(respuesta.data.descripcion);
   }
+
+  useEffect(() => {
+    getPeliculaId();
+  }, []);
 
   async function addPelicula() {
     let peliculaNueva = {
@@ -43,7 +51,7 @@ const EditarPelicula = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         addPelicula();
-        redireccion('/peliculas')
+        redireccion("/peliculas");
         Swal.fire({
           title: "Creada!",
           text: "La pelicula se ha creado correctamente.",
@@ -62,6 +70,7 @@ const EditarPelicula = () => {
           <input
             onChange={(e) => setNombre(e.target.value)}
             type="text"
+            value={nombre}
             required
           />
         </div>
@@ -71,6 +80,7 @@ const EditarPelicula = () => {
             onChange={(e) => setCalificacion(e.target.value)}
             type="text"
             required
+            value={calificacion}
           />
         </div>
         <div className="form-group">
@@ -79,6 +89,7 @@ const EditarPelicula = () => {
             onChange={(e) => setClasificacion(e.target.value)}
             type="text"
             required
+            value={clasificacion}
           />
         </div>
         <div className="form-group">
@@ -87,6 +98,7 @@ const EditarPelicula = () => {
             onChange={(e) => setAnio(e.target.value)}
             type="text"
             required
+            value={anio}
           />
         </div>
         <div className="form-group">
@@ -95,6 +107,7 @@ const EditarPelicula = () => {
             onChange={(e) => setDescripcion(e.target.value)}
             type="text"
             required
+            value={descripcion}
           />
         </div>
         <button onClick={updatePelicula} type="button">
